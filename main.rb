@@ -4,6 +4,7 @@ require 'csv'
 require './app/models/web_pages/techcareer_freelance'
 require './app/models/web_pages/levtech_freelance'
 require './app/models/web_pages/findy_freelance'
+require './app/models/web_pages/indeed'
 
 class Main
   ALL_CSV_FILE = './tmp/projects.csv'
@@ -18,6 +19,11 @@ class Main
     new_urls.concat(individual_new_urls)
     all_urls, individual_new_urls = findy(all_urls)
     new_urls.concat(individual_new_urls)
+    # TODO: Blockされる
+    # [5] pry(#<WebPages::Indeed>)> @web_driver.title
+    # => "Blocked - Indeed.com"
+    # all_urls, individual_new_urls = indeed(all_urls)
+    # new_urls.concat(individual_new_urls)
 
     write_all_data(all_urls)
     output_new_urls(new_urls)
@@ -48,6 +54,16 @@ class Main
   def findy(all_urls)
     url = 'https://freelance.findy-code.io/works?page=1&development_language_id=7'
     web_page = WebPages::FindyFreelance.new(url)
+    urls = web_page.get_projects
+    new_urls = urls.select { |url| !all_urls.include?(url) }
+
+    all_urls = all_urls.concat(new_urls)
+    [all_urls, new_urls]
+  end
+
+  def indeed(all_urls)
+    url = 'https://jp.indeed.com/jobs?q=Ruby&l=%E6%9D%B1%E4%BA%AC%E9%83%BD&from=searchOnHP&vjk=926fe91af52796cb&advn=9157842252305269'
+    web_page = WebPages::Indeed.new(url)
     urls = web_page.get_projects
     new_urls = urls.select { |url| !all_urls.include?(url) }
 
