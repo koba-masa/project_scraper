@@ -1,1 +1,1 @@
-# template_of_scraping_by_ruby
+# project_scraper
