@@ -42,9 +42,11 @@ Metrics/ModuleLength:
   Exclude:
     - 'spec/**/*'
 
-Style/Documentation:
+Naming/AccessorMethodName:
   Enabled: false
 
+Style/Documentation:
+  Enabled: false
 
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
