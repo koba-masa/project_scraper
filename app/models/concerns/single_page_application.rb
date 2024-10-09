@@ -8,15 +8,14 @@ module SinglePageApplication
     client.read_timeout = ENV.fetch('SELENIUM_READ_TIMEOUT', 180).to_i
     @driver = if remote_selenium_server_url
                 Selenium::WebDriver.for(
-                  :chrome,
-                  capabilities: [options],
-                  http_client: client,
+                  :remote,
+                  url: remote_selenium_server_url,
+                  options:,
                 )
               else
                 Selenium::WebDriver.for(
-                  :remote,
-                  url: remote_selenium_server_url,
-                  capabilities: [options],
+                  :chrome,
+                  options:,
                   http_client: client,
                 )
               end
