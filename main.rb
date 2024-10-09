@@ -5,6 +5,7 @@ require './app/models/web_pages/techcareer_freelance'
 require './app/models/web_pages/levtech_freelance'
 require './app/models/web_pages/findy_freelance'
 require './app/models/web_pages/indeed'
+require './app/models/web_pages/geechs_job'
 
 class Main
   ALL_CSV_FILE = './tmp/projects.csv'
@@ -24,6 +25,8 @@ class Main
     # => "Blocked - Indeed.com"
     # all_urls, individual_new_urls = indeed(all_urls)
     # new_urls.concat(individual_new_urls)
+    all_urls, individual_new_urls = geechs_job(all_urls)
+    new_urls.concat(individual_new_urls)
 
     write_all_data(all_urls)
     output_new_urls(new_urls)
@@ -64,6 +67,16 @@ class Main
   def indeed(all_urls)
     list_url = 'https://jp.indeed.com/jobs?q=Ruby&l=%E6%9D%B1%E4%BA%AC%E9%83%BD&from=searchOnHP&vjk=926fe91af52796cb&advn=9157842252305269'
     web_page = WebPages::Indeed.new(list_url)
+    urls = web_page.get_projects
+    new_urls = urls.reject { |url| all_urls.include?(url) }
+
+    all_urls.concat(new_urls)
+    [all_urls, new_urls]
+  end
+
+  def geechs_job(all_urls)
+    list_url = 'https://geechs-job.com/project/ruby'
+    web_page = WebPages::GeechsJob.new(list_url)
     urls = web_page.get_projects
     new_urls = urls.reject { |url| all_urls.include?(url) }
 
