@@ -32,42 +32,42 @@ class Main
   private
 
   def techfree(all_urls)
-    url = 'https://freelance.techcareer.jp/projects/occupations/server-side-engineer/?jobs_per_page=30&scope=search&skill=43'
-    web_page = WebPages::TechcareerFreelance.new(url)
+    list_url = 'https://freelance.techcareer.jp/projects/occupations/server-side-engineer/?jobs_per_page=30&scope=search&skill=43'
+    web_page = WebPages::TechcareerFreelance.new(list_url)
     urls = web_page.get_projects
-    new_urls = urls.select { |url| !all_urls.include?(url) }
+    new_urls = urls.reject { |url| all_urls.include?(url) }
 
-    all_urls = all_urls.concat(new_urls)
+    all_urls.concat(new_urls)
     [all_urls, new_urls]
   end
 
   def levetech(all_urls)
-    url = 'https://freelance.levtech.jp/project/skill-8/'
-    web_page = WebPages::LevetechFreelance.new(url)
+    list_url = 'https://freelance.levtech.jp/project/skill-8/'
+    web_page = WebPages::LevetechFreelance.new(list_url)
     urls = web_page.get_projects
-    new_urls = urls.select { |url| !all_urls.include?(url) }
+    new_urls = urls.reject { |url| all_urls.include?(url) }
 
-    all_urls = all_urls.concat(new_urls)
+    all_urls.concat(new_urls)
     [all_urls, new_urls]
   end
 
   def findy(all_urls)
-    url = 'https://freelance.findy-code.io/works?page=1&development_language_id=7'
-    web_page = WebPages::FindyFreelance.new(url)
+    list_url = 'https://freelance.findy-code.io/works?page=1&development_language_id=7'
+    web_page = WebPages::FindyFreelance.new(list_url)
     urls = web_page.get_projects
-    new_urls = urls.select { |url| !all_urls.include?(url) }
+    new_urls = urls.reject { |url| all_urls.include?(url) }
 
-    all_urls = all_urls.concat(new_urls)
+    all_urls.concat(new_urls)
     [all_urls, new_urls]
   end
 
   def indeed(all_urls)
-    url = 'https://jp.indeed.com/jobs?q=Ruby&l=%E6%9D%B1%E4%BA%AC%E9%83%BD&from=searchOnHP&vjk=926fe91af52796cb&advn=9157842252305269'
-    web_page = WebPages::Indeed.new(url)
+    list_url = 'https://jp.indeed.com/jobs?q=Ruby&l=%E6%9D%B1%E4%BA%AC%E9%83%BD&from=searchOnHP&vjk=926fe91af52796cb&advn=9157842252305269'
+    web_page = WebPages::Indeed.new(list_url)
     urls = web_page.get_projects
-    new_urls = urls.select { |url| !all_urls.include?(url) }
+    new_urls = urls.reject { |url| all_urls.include?(url) }
 
-    all_urls = all_urls.concat(new_urls)
+    all_urls.concat(new_urls)
     [all_urls, new_urls]
   end
 
@@ -93,7 +93,7 @@ class Main
   end
 
   def output_new_urls(new_urls)
-    puts "== Results =========================================="
+    puts '== Results =========================================='
     new_urls.each do |url|
       puts url
     end
