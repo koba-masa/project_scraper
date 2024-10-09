@@ -1,0 +1,25 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker_files/Ruby.Dockerfile
+    environment:
+      APP_ENV: development
+      SLEEP_TIME: 2
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - .:/app
+      - app_bundle:/usr/local/bundle
+
+  selenium_server:
+    image: seleniarm/standalone-chromium
+    ports:
+      - 4444:4444
+      - 7900:7900
+    environment:
+      - SE_NODE_MAX_SESSIONS=2
+    shm_size: "2gb"
+
+volumes:
+  app_bundle:
+    external: false

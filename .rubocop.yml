@@ -1,0 +1,81 @@
+# The behavior of RuboCop can be controlled via the .rubocop.yml
+# configuration file. It makes it possible to enable/disable
+# certain cops (checks) and to alter their behavior if they accept
+# any parameters. The file can be placed either in your home
+# directory or in some project directory.
+#
+# RuboCop will start looking for the configuration file in the directory
+# where the inspected file is and continue its way up to the root directory.
+#
+# See https://docs.rubocop.org/rubocop/configuration
+require:
+  - rubocop-performance
+  - rubocop-rspec
+
+AllCops:
+  Exclude:
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+  NewCops: enable
+
+Layout/ExtraSpacing:
+  AllowForAlignment: false
+
+Metrics/AbcSize:
+  Max: 30
+
+Metrics/ClassLength:
+  CountAsOne: ["array", "hash"]
+
+Metrics/BlockLength:
+  CountAsOne: ["array", "hash"]
+  Exclude:
+    - 'config/**/*'
+    - 'spec/**/*'
+
+Metrics/MethodLength:
+  Max: 20
+  CountAsOne: ["array", "hash"]
+
+Metrics/ModuleLength:
+  CountAsOne: ["array", "hash"]
+  Exclude:
+    - 'spec/**/*'
+
+Style/Documentation:
+  Enabled: false
+
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Metrics/ParameterLists:
+  Max: 6
+
+RSpec/IndexedLet:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 5
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/ContextWording:
+  Prefixes:
+    - when
+    - with
+    - without
+    - but
