@@ -2,6 +2,7 @@
 
 require 'csv'
 require './app/models/web_pages/techcareer_freelance'
+require './app/models/web_pages/levtech_freelance'
 
 class Main
   ALL_CSV_FILE = './tmp/projects.csv'
@@ -10,8 +11,10 @@ class Main
     all_urls = read_all_data
 
     new_urls = []
-    all_urls, techfree_new_urls = techfree(all_urls)
-    new_urls.concat(techfree_new_urls)
+    all_urls, individual_new_urls = techfree(all_urls)
+    new_urls.concat(individual_new_urls)
+    all_urls, individual_new_urls = levetech(all_urls)
+    new_urls.concat(individual_new_urls)
 
     write_all_data(all_urls)
     output_new_urls(new_urls)
@@ -25,6 +28,15 @@ class Main
     urls = web_page.get_projects
     new_urls = urls.select { |url| !all_urls.include?(url) }
 
+    all_urls = all_urls.concat(new_urls)
+    [all_urls, new_urls]
+  end
+
+  def levetech(all_urls)
+    url = 'https://freelance.levtech.jp/project/skill-8/'
+    web_page = WebPages::LevetechFreelance.new(url)
+    urls = web_page.get_projects
+    new_urls = urls.select { |url| !all_urls.include?(url) }
 
     all_urls = all_urls.concat(new_urls)
     [all_urls, new_urls]
